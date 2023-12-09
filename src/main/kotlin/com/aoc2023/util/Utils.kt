@@ -9,7 +9,7 @@ class Utils {
     fun readFileAsMutableList(relFilePath: String): MutableList<String> {
       return Files
         .readAllLines(
-          Paths.get("./src/main/kotlin/com/aoc2022/$relFilePath")
+          Paths.get("./src/main/kotlin/com/aoc2023/$relFilePath")
         )
         .toMutableList()
     }
@@ -17,7 +17,7 @@ class Utils {
     fun readFileAsStream(relFilePath: String): Stream<String> {
       return Files
         .lines(
-          Paths.get("./src/main/kotlin/com/aoc2022/$relFilePath")
+          Paths.get("./src/main/kotlin/com/aoc2023/$relFilePath")
         )
     }
   }
