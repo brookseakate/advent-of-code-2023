@@ -1,6 +1,6 @@
-import main.kotlin.com.aoc2023.day1.Day1
+import main.kotlin.com.aoc2023.day2.Day2
 
 fun main() {
   println("hello")
-  Day1.main()
+  Day2.main()
 }
