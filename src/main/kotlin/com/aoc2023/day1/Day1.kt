@@ -7,7 +7,8 @@ class Day1 {
     fun main() {
       println("hello Day 1")
 
-      val input = readFileAsMutableList("day1/Input.txt")
+      val input = readFileAsMutableList("day1/SampleInput2")
+//      val input = readFileAsMutableList("day1/Input.txt")
       val total = getCalibrationTotal(input)
       println("Total: $total")
     }
@@ -16,7 +17,7 @@ class Day1 {
       var total = 0
       for (line in lines) {
         val calibrationVal = getCalibrationValue(line)
-        total+=calibrationVal
+        total += calibrationVal
 
         // TODO remove logs
         println("Running total: $total")
@@ -26,18 +27,30 @@ class Day1 {
     }
 
     private fun getCalibrationValue(string: String): Int {
+      val digitPattern = "\\d|"
+      val enumPattern = Digit.values().joinToString("|") { "(" + it.string + ")" }
+      val regex = Regex(digitPattern + enumPattern)
 
-      val regex = Regex("\\d")
+      println("Raw string: $string")
 
       val digits = regex
         .findAll(
-          replaceDigitStringsWithDigits(string)
+          string
         )
-        .map { it.value }
+        .map {
+          if (Regex(digitPattern).matches(it.value)) {
+            it.value
+          } else if (Regex(enumPattern).matches(it.value)) {
+            it.value.toDigit().integer.toString()
+          } else {
+            println("Well that's broken.......................")
+            ""
+          }
+        }
         .toList()
 
       // TODO remove logs
-      println(digits)
+      println("Digits: $digits")
       val result = Integer.parseInt(digits.first() + digits.last())
       println("Result: $result")
 
@@ -53,9 +66,9 @@ class Day1 {
       )
 
       val digitized = string.replace(
-          regex = regex,
-          transform = { it.value.toDigit().integer.toString() }
-        )
+        regex = regex,
+        transform = { it.value.toDigit().integer.toString() }
+      )
 
       // TODO remove logs
       println("Digitized: $digitized")
@@ -79,6 +92,7 @@ class Day1 {
       ;
 
     }
+
     private fun String.toDigit(): Digit {
       return Digit.valueOf(this.uppercase())
     }
