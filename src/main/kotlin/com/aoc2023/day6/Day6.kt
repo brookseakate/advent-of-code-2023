@@ -16,12 +16,12 @@ class Day6 {
       TODO("Super boring here, skip for this one")
     }
 
-    private fun getInput(): Pair<List<Int>, List<Int>> /* timeList, distanceList */ {
-      val sampleTimes = listOf(7, 15, 30)
-      val sampleDistances = listOf(9, 40, 200)
+    private fun getInput(): Pair<List<Long>, List<Long>> /* timeList, distanceList */ {
+      val sampleTimes = listOf(71530L)
+      val sampleDistances = listOf(940200L)
 
-      val inputTimes = listOf(44, 82, 69, 81)
-      val inputDistances = listOf(202, 1076, 1138, 1458)
+      val inputTimes = listOf(44826981L)
+      val inputDistances = listOf(202107611381458L)
 
 //      return Pair(sampleTimes, sampleDistances)
       return Pair(inputTimes, inputDistances)
@@ -30,12 +30,12 @@ class Day6 {
 
     private fun getProductOfWinningStrategies(
       // would do something OO, but not interesting
-      raceLengthList: List<Int>,
-      recordDistanceList: List<Int>,
-    ): Int {
+      raceLengthList: List<Long>,
+      recordDistanceList: List<Long>,
+    ): Long {
       check(raceLengthList.size == recordDistanceList.size) { "Input is wrong!!" }
 
-      val winningStrategiesPerRaceList = mutableListOf<Int>()
+      val winningStrategiesPerRaceList = mutableListOf<Long>()
 
       raceLengthList.forEachIndexed { index, raceLength ->
         val (minWinningButtonPress, maxWinningButtonPress) = getMinAndMaxPresses(
@@ -52,10 +52,10 @@ class Day6 {
     }
 
     private fun getMinAndMaxPresses(
-      raceLength: Int,
-      recordDistance: Int,
+      raceLength: Long,
+      recordDistance: Long,
       // feel like we'll want an a (coefficient for our x^2) for part 2, but will resist adding til then...
-    ): Pair<Int, Int> /* Min, Max */ {
+    ): Pair<Long, Long> /* Min, Max */ {
       // quadratic equation: ax^2 + bx + c
 
       // our parabola is shaped: y = -x^2 + bx, where:
@@ -70,8 +70,8 @@ class Day6 {
       val recordMinPress = (-b + sqrt(b.toDouble().pow(2) - (4*a*c))) / 2*a
       val recordMaxPress = (-b - sqrt(b.toDouble().pow(2) - (4*a*c))) / 2*a
 
-      val ourMinPress = recordMinPress.toInt() + 1
-      val ourMaxPress = recordMaxPress.toInt() // don't add here – we want to hold LESS long
+      val ourMinPress = recordMinPress.toLong() + 1
+      val ourMaxPress = recordMaxPress.toLong() // don't add here – we want to hold LESS long
         .let { if (it.compareTo(recordMaxPress) == 0) {
           // ensure we're *under* theirs (handles for case: recordMaxPress == its Int value)
           it - 1
